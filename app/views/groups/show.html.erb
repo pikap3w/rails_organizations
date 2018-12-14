@@ -1,0 +1,28 @@
+  <div class="row">
+    <h3><%= @group.name %></h3>
+    <% if @group.members.where(user_id: session[:user_id]).count == 0 %>
+
+      <form action='/members' method='post'>
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <input type="hidden" name="group[group_id]" value="<%= @group.id %>">
+        <button type='submit' class="btn btn-success offset-3" name='Join'>Join Group</button>
+      </form>
+    <% else %>
+      <form action="/members/<%= @group.members.find_by(user_id: session[:user_id]).id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="group[group_id]" value="<%= @group.id %>">
+        <button type="submit" class="btn btn-danger offset-3" name="Leave">Leave Group</button>
+      </form>
+    <% end %>
+  </div>
+
+  <p class="mb-3"><%= @group.description %></p>
+
+  <h4 class="row">Created by: <%= @group.user.first_name %> </h4>
+  <h4 class="row">Members:</h4>
+  <ul class="list-unstyled">
+    <% @members.each do |m| %>
+      <li><%= m.user.first_name %> <%= m.user.last_name %></li>
+    <% end %>
+  </ul>

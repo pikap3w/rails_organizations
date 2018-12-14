@@ -1,0 +1,81 @@
+<% content_for :title, "Welcome!" %>
+
+<% content_for :left_column do %>
+<!-- REGISTRATION SECTION -->
+  <h2 class="text-center p-3">Register</h2>
+  <% if flash[:signup_errors] %>
+    <% flash[:signup_errors].each do |e| %>
+      <p class="alert alert-danger"><%= e %></p>
+    <% end %>
+  <% end %>
+
+  <form action="<%= users_path %>" method="post">
+    <input class='form-control' type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group row">
+      <label for="user[first_name]" class="col-3 col-form-label">First Name</label>
+      <div class="col-9">
+        <input class="form-control" name="user[first_name]" placeholder="First Name" type="text">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="user[last_name]" class="col-3 col-form-label">Last Name</label>
+      <div class="col-9">
+        <input class="form-control" name="user[last_name]" placeholder="Last Name" type="text">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="user[email]" class="col-3 col-form-label">Email</label>
+      <div class="col-9">
+        <input class="form-control" name="user[email]" placeholder="Email" type="text">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="user[password]" class="col-3 col-form-label">Password</label>
+      <div class="col-9">
+        <input class="form-control" name="user[password]" placeholder="Password" type="password">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="user[password_confirmation]" class="col-3 col-form-label">Confirm Password</label>
+      <div class="col-9">
+        <input class="form-control" name="user[password_confirmation]" placeholder="Confirm Password" type="password">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-2 offset-10">
+        <input class="btn btn-lg btn-outline-success shadow float-right" type="submit" value="Register">
+      </div>
+    </div>
+  </form>
+<% end %>
+
+<% content_for :right_column do %>
+<!-- LOGIN SECTION -->
+  <h2 class="text-center p-3">Login</h2>
+  <% if flash[:login_errors] %>
+    <% flash[:login_errors].each do |e| %>
+      <p class="alert alert-danger"><%= e %></p>
+    <% end %>
+  <% end %>
+
+  <form action="<%= sessions_url %>" method="post">
+    <input class='form-control' type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group row">
+      <label for="email" class="col-3 col-form-label">Email</label>
+      <div class="col-9">
+        <input class="form-control" name="email" placeholder="Email" type="text">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="password" class="col-3 col-form-label">Password</label>
+      <div class="col-9">
+        <input class="form-control" name="password" placeholder="Password" type="password">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-2 offset-10">
+        <input class="btn btn-lg btn-outline-secondary shadow float-right" type="submit" value="Login">
+      </div>
+    </div>
+  </form>
+<% end %>

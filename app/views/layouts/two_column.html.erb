@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Dynamically add a title -->
+  <title><%= yield :title %></title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if current_user %>
+  <header>
+    <div class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+          <h3 class="nav-item text-white">Hi <%= current_user.first_name %> <%= current_user.last_name %>!</h3>
+        <ul class="nav">
+          <li>
+          </li>
+          <li>
+            <a class="nav-item nav-link navbar-brand navbar-text" href="<%= sessions_path %>/1" data-method='delete'>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+<% end %>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 p-3 border">
+      <%= yield :left_column %>
+    </div>
+    <div class="col-6 p-3 border">
+      <%= yield :right_column %>
+    </div>
+  </div>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<% content_for :title, "Dashboard" %>
+
+<% content_for :left_column do %>
+  <p>Here are the organizations you may join:</p>
+  <% @groups.each do |g| %>
+    <ul class="list-unstyled">
+      <li class="row">
+        <a href="/groups/<%= g.id %>"><%= g.name %></a>
+        <% if session[:user_id] == g.user.id %>
+          <%= button_to 'Delete', group_path(g), method: :delete, class: 'btn btn-sm btn-danger offset-5' %>
+        <% end %>
+      </li>
+      <li class="ml-4">
+        <%= pluralize(g.members.count, 'member') %>
+      </li>
+      <li class="ml-4">
+        <%= g.description %>
+      </li>
+      <li class="ml-4">
+
+      </li>
+    </ul>
+  <% end %>
+<% end %>
+
+
+<% content_for :right_column do %>
+  <% if flash[:notice] %>
+    <% flash[:notice].each do |e| %>
+      <p class="alert alert-danger"><%= e %></p>
+    <% end %>
+  <% end %>
+  <p>Create a new organization:</p>
+  <form action="<%= groups_url %>" method="post">
+    <input class='form-control' type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group row">
+      <label for="group[name]" class="col-3 col-form-label">Org Name:</label>
+      <div class="col-9">
+        <input class="form-control" name="group[name]" id="group[name]" type="text">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="group[description]" class="col-3 col-form-label">Description:</label>
+      <div class="col-9">
+        <textarea class="form-control" name="group[description]" id="group[description]" type="text"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-2 offset-10">
+        <input class="btn btn-outline-success shadow float-right" type="submit" value="Create">
+      </div>
+    </div>
+  </form>
+<% end %>

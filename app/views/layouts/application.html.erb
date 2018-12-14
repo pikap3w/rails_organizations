@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= yield :title %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if current_user %>
+  <header>
+    <div class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <h3 class="nav-item text-white">Hi <%= current_user.first_name %> <%= current_user.last_name %>!</h3>
+        <ul class="nav">
+          <li>
+            <a class="nav-item nav-link navbar-brand navbar-text" href="<%= groups_path %>">Dashboard</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link navbar-brand navbar-text" href="<%= sessions_path %>/1" data-method='delete'>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+<% end %>
+
+<div class="container-fluid p-3 m-3">
+  <%= yield %>
+</div>
+
+</body>
+</html>
